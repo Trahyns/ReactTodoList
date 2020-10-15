@@ -3,11 +3,11 @@ import AddTodo from "./AddTodo"
 import TodoList from './TodoList'
 import Top from './Top'
 import './index.css'
-import Navbar from "../Nav.js"
+import BootstrapNavbar from "../Nav.js"
 
 const App = () => (
   <div>
-  <Navbar />
+  <BootstrapNavbar />
   <div className="todo-box">
     <div className="todo-innerBox">
       <Top />
