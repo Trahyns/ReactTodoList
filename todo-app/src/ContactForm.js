@@ -1,92 +1,66 @@
-import React from 'react';
-import { LocalForm, Form, actions, Control, Field, Errors } from 'react-redux-form';
-import { connect } from 'react-redux';
-import icepick from 'icepick';
+import React from 'react'
+import { Field, reduxForm } from 'redux-form'
 
-window.i = icepick;
-
-const required = (val) => !!(val && val.length);
-
-function hasToBeTrue(value) {
-    if (value === false || typeof value !== 'boolean') {
-        return false;
-    }
-    return true;
+const SimpleForm = (props) => {
+    const { handleSubmit, pristine, reset, submitting } = props
+    return (
+        <form onSubmit={handleSubmit}>
+            <div>
+                <label>First Name</label>
+                <div>
+                    <Field name="firstName" component="input" type="text" placeholder="First Name" />
+                </div>
+            </div>
+            <div>
+                <label>Last Name</label>
+                <div>
+                    <Field name="lastName" component="input" type="text" placeholder="Last Name" />
+                </div>
+            </div>
+            <div>
+                <label>Email</label>
+                <div>
+                    <Field name="email" component="input" type="email" placeholder="Email" />
+                </div>
+            </div>
+            <div>
+                <label>Sex</label>
+                <div>
+                    <label><Field name="sex" component="input" type="radio" value="male" /> Male</label>
+                    <label><Field name="sex" component="input" type="radio" value="female" /> Female</label>
+                </div>
+            </div>
+            <div>
+                <label>Favorite Color</label>
+                <div>
+                    <Field name="favoriteColor" component="select">
+                        <option></option>
+                        <option value="ff0000">Red</option>
+                        <option value="00ff00">Green</option>
+                        <option value="0000ff">Blue</option>
+                    </Field>
+                </div>
+            </div>
+            <div>
+                <label htmlFor="employed">Employed</label>
+                <div>
+                    <Field name="employed" id="employed" component="input" type="checkbox" />
+                </div>
+            </div>
+            <div>
+                <label>Notes</label>
+                <div>
+                    <Field name="notes" component="textarea" />
+                </div>
+            </div>
+            <div>
+                <button type="submit" disabled={pristine || submitting}>Submit</button>
+                <button type="button" disabled={pristine || submitting} onClick={reset}>Clear Values</button>
+            </div>
+        </form>
+    )
 }
 
-// control
-
-class UserForm extends React.Component {
-    constructor(props) {
-        super(props);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-    handleSubmit(user) {
-        const { dispatch } = this.props;
-
-        // Do whatever you like in here.
-        // You can use actions such as:
-        // dispatch(actions.submit('user', somePromise));
-        // etc.
-        const somePromise = new Promise((resolve) => {
-            /* eslint-disable no-console */
-            console.log(user);
-            /* eslint-enable no-console */
-            setTimeout(() => { resolve(true); }, 1000);
-        });
-
-        dispatch(actions.submit('user', somePromise));
-    }
-    render() {
-        return (
-            <Form model="user" onSubmit={this.handleSubmit}>
-                <div>
-                    <label>First name:</label>
-                    <Control.text
-                        model="user.firstName"
-                        validators={{ len: (val) => val.length > 8 }}
-                        mapProps={{
-                            className: ({ fieldValue }) => fieldValue.focus
-                                ? 'focused'
-                                : ''
-                        }}
-                    />
-                    <Errors model=".firstName" messages={{
-                        len: 'len must be > 8'
-                    }} />
-                </div>
-
-                <div>
-                    <label>Last name:</label>
-                    <Control model="user.lastName" validators={{ required }} />
-                </div>
-
-                <Field model="user.bag">
-                    <label>
-                        <input type="radio" value="plastic" />
-                        <span>Plastic</span>
-                    </label>
-                    <label>
-                        <input type="radio" value="paper" />
-                        <span>Paper</span>
-                    </label>
-                </Field>
-
-                <Control.button model="user" disabled={{ valid: false }}>
-                    Finish registration!
-        </Control.button>
-                <input type="reset" value="Reset" title="reset" />
-            </Form>
-        );
-    }
-}
-
-UserForm.propTypes = {
-    dispatch: React.PropTypes.func.isRequired,
-    user: React.PropTypes.shape({
-        firstName: React.PropTypes.string.isRequired,
-        lastName: React.PropTypes.string.isRequired,
-    }).isRequired,
-};
-
-export default connect(s => s)(UserForm);
+export default reduxForm({
+    form: 'simple'  // a unique identifier for this form
+})(SimpleForm)
