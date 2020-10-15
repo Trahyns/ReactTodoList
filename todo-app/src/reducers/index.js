@@ -1,4 +1,4 @@
-import todos from './todos'
+import todos from './todo'
 import filter from './filter'
 import {
     combineReducers
