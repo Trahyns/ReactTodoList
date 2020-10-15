@@ -5,10 +5,10 @@ import {
     Route,
     useParams,
 } from "react-router-dom";
-import { Navbar, Nav, NavDropdown, Form, FormControl, Button } from 'react-bootstrap'
+import { Navbar, Nav } from 'react-bootstrap'
 import Home from './Home';
-import AboutUs from './AboutUs';
 import ContactUs from './ContactUs';
+import MyTasks from './MyTasks';
 
 class BootstrapNavbar extends React.Component {
 
@@ -19,25 +19,14 @@ class BootstrapNavbar extends React.Component {
                     <div className="col-md-12">
                         <Router>
                             <Navbar bg="dark" variant="dark" expand="lg" sticky="top">
-                                <Navbar.Brand href="#home">React Bootstrap Navbar</Navbar.Brand>
+                                <Navbar.Brand href="#home">What to do?</Navbar.Brand>
                                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                                 <Navbar.Collapse id="basic-navbar-nav">
                                     <Nav className="mr-auto">
                                         <Nav.Link href="/">Home</Nav.Link>
-                                        <Nav.Link href="/about-us">Contact Us</Nav.Link>
-                                        <Nav.Link href="/contact-us">About Us</Nav.Link>
-                                        <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-                                            <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                                            <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-                                            <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-                                            <NavDropdown.Divider />
-                                            <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-                                        </NavDropdown>
+                                        <Nav.Link href="/my-tasks">My Tasks</Nav.Link>
+                                        <Nav.Link href="/contact-us">Contact Us</Nav.Link>
                                     </Nav>
-                                    <Form inline>
-                                        <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-                                        <Button variant="outline-success">Search</Button>
-                                    </Form>
                                 </Navbar.Collapse>
                             </Navbar>
                             <br />
@@ -45,8 +34,8 @@ class BootstrapNavbar extends React.Component {
                                 <Route exact path="/">
                                     <Home />
                                 </Route>
-                                <Route path="/about-us">
-                                    <AboutUs />
+                                <Route path="/my-tasks">
+                                    <MyTasks />
                                 </Route>
                                 <Route path="/contact-us">
                                     <ContactUs />
