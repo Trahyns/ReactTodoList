@@ -1,37 +1,27 @@
-import React, { Component } from "react";
+import React from 'react'
+import { addTodo } from "../actions"
+import { useStoreContext } from '../redux'
 
-export default class TodoInput extends Component {
-    render() {
-        const { item, handleChange, handleSubmit, editItem } = this.props;
-        return (
-            <div className="card card-body my-3">
-                <form onSubmit={handleSubmit}>
-                    <div className="input-group">
-                        <div className="input-group-prepend">
-                            <div className="input-group-text bg-primary text-white">
-                                <i className="fas fa-book" />
-                            </div>
-                        </div>
-                        <input
-                            type="text"
-                            className="form-control text-capitalize"
-                            placeholder="add a todo item"
-                            value={item}
-                            onChange={handleChange}
-                        />
-                    </div>
-                    <button
-                        type="submit"
-                        className={
-                            editItem
-                                ? "btn btn-block btn-success mt-3"
-                                : "btn btn-block btn-primary mt-3"
-                        }
-                    >
-                        {editItem ? "edit item" : "add item"}
-                    </button>
-                </form>
-            </div>
-        );
-    }
+let input
+
+let AddTodo = () => {
+    const [store, dispatch] = useStoreContext()
+
+    return (
+        <div>
+            <form onSubmit={e => {
+                e.preventDefault()
+                if (!input.value.trim()) { return }
+                dispatch(addTodo(input.value))
+                input.value = ""
+            }}>
+                <input placeholder="add item" ref={r => input = r} className="todo-input" />
+                <button type="submit" className="todo-btn">
+                    Add item
+				</button>
+            </form>
+        </div>
+    )
 }
+
+export default AddTodo
