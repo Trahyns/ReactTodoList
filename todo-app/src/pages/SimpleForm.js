@@ -1,6 +1,51 @@
 import React from 'react';
 import { Container } from "react-bootstrap";
 import { Field, reduxForm } from 'redux-form'
+import TextField from 'material-ui/TextField'
+import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton'
+import Checkbox from 'material-ui/Checkbox'
+import SelectField from 'material-ui/SelectField'
+import MenuItem from 'material-ui/MenuItem'
+import asyncValidate from './asyncValidate'
+
+const validate = values => {
+    const errors = {}
+    const requiredFields = ['firstName', 'lastName', 'email', 'favoriteColor', 'notes']
+    requiredFields.forEach(field => {
+        if (!values[field]) {
+            errors[field] = 'Required'
+        }
+    })
+    if (values.email && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+        errors.email = 'Invalid email address'
+    }
+    return errors
+}
+
+const renderTextField = props => (
+    <TextField hintText={props.label}
+        floatingLabelText={props.label}
+        errorText={props.touched && props.error}
+        {...props}
+    />
+)
+
+const renderCheckbox = props => (
+    <Checkbox label={props.label}
+        checked={props.value ? true : false}
+        onCheck={props.onChange} />
+)
+
+const renderSelectField = props => (
+    <SelectField
+        floatingLabelText={props.label}
+        errorText={props.touched && props.error}
+        {...props}
+        onChange={(event, index, value) => props.onChange(value)}>
+    </SelectField>
+)
+
+
 
 const submit = (values) => {
     console.log('submit inside form');
@@ -12,99 +57,39 @@ const SimpleForm = props => {
 
     return (
         <React.Fragment>  
-            <Container className="center">
+            <Container className="fluid">
                 <form onSubmit={handleSubmit(submit)}>
                     <div>
-                        <label>First Name</label>
-                        <div>
-                            <Field
-                                name="firstName"
-                                component="input"
-                                type="text"
-                                placeholder="First Name"
-                            />
-                        </div>
+                        <Field name="firstName" component={renderTextField} label="First Name" />
                     </div>
                     <div>
-                        <label>Last Name</label>
-                        <div>
-                            <Field
-                                name="lastName"
-                                component="input"
-                                type="text"
-                                placeholder="Last Name"
-                            />
-                        </div>
+                        <Field name="lastName" component={renderTextField} label="Last Name" />
                     </div>
                     <div>
-                        <label>Email</label>
-                        <div>
-                            <Field
-                                name="email"
-                                component="input"
-                                type="email"
-                                placeholder="Email"
-                            />
-                        </div>
+                        <Field name="email" component={renderTextField} label="Email" />
                     </div>
                     <div>
-                        <label>Sex</label>
-                        <div>
-                            <label>
-                                <Field
-                                    name="sex"
-                                    component="input"
-                                    type="radio"
-                                    value="male"
-                                />{' '}
-                    Male
-                </label>
-                            <label>
-                                <Field
-                                    name="sex"
-                                    component="input"
-                                    type="radio"
-                                    value="female"
-                                />{' '}
-                    Female
-                </label>
-                        </div>
+                        <Field name="sex" component={RadioButtonGroup}>
+                            <RadioButton value="male" label="male" />
+                            <RadioButton value="female" label="female" />
+                        </Field>
                     </div>
                     <div>
-                        <label>Favorite Color</label>
-                        <div>
-                            <Field name="favoriteColor" component="select">
-                                <option />
-                                <option value="ff0000">Red</option>
-                                <option value="00ff00">Green</option>
-                                <option value="0000ff">Blue</option>
-                            </Field>
-                        </div>
+                        <Field name="favoriteColor" component={renderSelectField} label="Favorite Color">
+                            <MenuItem value={'ff0000'} primaryText="Red" />
+                            <MenuItem value={'00ff00'} primaryText="Green" />
+                            <MenuItem value={'0000ff'} primaryText="Blue" />
+                        </Field>
                     </div>
                     <div>
-                        <label htmlFor="employed">Employed</label>
-                        <div>
-                            <Field
-                                name="employed"
-                                id="employed"
-                                component="input"
-                                type="checkbox"
-                            />
-                        </div>
+                        <Field name="employed" component={renderCheckbox} label="Employed" />
                     </div>
                     <div>
-                        <label>Notes</label>
-                        <div>
-                            <Field name="notes" component="textarea" />
-                        </div>
+                        <Field name="notes" component={renderTextField} label="Notes" multiLine={true} rows={2} />
                     </div>
                     <div>
-                        <button type="submit" disabled={pristine || submitting}>
-                            Submit
-                </button>
-                        <button type="button" disabled={pristine || submitting} onClick={reset}>
-                            Clear Values
-                </button>
+                        <button type="submit" disabled={pristine || submitting}>Submit</button>
+                        <button type="button" disabled={pristine || submitting} onClick={reset}>Clear Values</button>
                     </div>
                 </form>
         </Container>
@@ -113,5 +98,7 @@ const SimpleForm = props => {
 }
 
 export default reduxForm({
-    form: 'simple' // a unique identifier for this form
+    form: 'simple', // a unique identifier for this form
+    validate,
+    asyncValidate
 })(SimpleForm)

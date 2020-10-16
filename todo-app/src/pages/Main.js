@@ -14,7 +14,7 @@ export default class Main extends React.Component {
 
     componentDidMount() {
         axios
-            .get("https://jsonplaceholder.typicode.com/todos?_limit=0")
+            .get("https://jsonplaceholder.typicode.com/todos?_limit=3")
             .then(res => this.setState({ todos: res.data }));
     }
 
