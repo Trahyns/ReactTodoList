@@ -1,12 +1,16 @@
 import React from 'react';
 import { Container } from "react-bootstrap";
 import { Field, reduxForm } from 'redux-form'
-import TextField from 'material-ui/TextField'
-import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton'
-import Checkbox from 'material-ui/Checkbox'
-import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
 import asyncValidate from './asyncValidate'
+import { RadioButton } from 'material-ui/RadioButton'
+import {
+    Checkbox,
+    RadioButtonGroup,
+    SelectField,
+    TextField,
+} from 'redux-form-material-ui'
+
 
 const validate = values => {
     const errors = {}
@@ -44,8 +48,6 @@ const renderSelectField = props => (
         onChange={(event, index, value) => props.onChange(value)}>
     </SelectField>
 )
-
-
 
 const submit = (values) => {
     console.log('submit inside form');
