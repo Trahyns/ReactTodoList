@@ -1,27 +1,31 @@
-import React from 'react'
-import { addTodo } from "../actions"
-import { useStoreContext } from '../redux'
+import React from "react";
+import { InputGroup, FormControl, Button } from "react-bootstrap";
 
-let input
+export default class AddTodo extends React.Component {
+    state = {
+        title: ""
+    };
 
-let AddTodo = () => {
-    const [store, dispatch] = useStoreContext()
+    inputChange = e => this.setState({ [e.target.name]: e.target.value });
 
-    return (
-        <div>
-            <form onSubmit={e => {
-                e.preventDefault()
-                if (!input.value.trim()) { return }
-                dispatch(addTodo(input.value))
-                input.value = ""
-            }}>
-                <input placeholder="add item" ref={r => input = r} className="todo-input" />
-                <button type="submit" className="todo-btn">
-                    Add item
-				</button>
-            </form>
-        </div>
-    )
+    addTodo = () => {
+        this.props.addTodo(this.state.title);
+        this.setState({ title: "" });
+    };
+
+    render = () => (
+        <InputGroup>
+            <FormControl
+                name="title"
+                placeholder="Add todo ..."
+                value={this.state.title}
+                onChange={this.inputChange}
+            />
+            <InputGroup.Append>
+                <Button variant="success" onClick={this.addTodo}>
+                    Add Todo
+        </Button>
+            </InputGroup.Append>
+        </InputGroup>
+    );
 }
-
-export default AddTodo
