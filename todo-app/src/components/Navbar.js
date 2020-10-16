@@ -6,7 +6,7 @@ export default () => (
     <Navbar bg="dark" variant="dark">
         <Container>
             <Link className="navbar-brand" to="/">
-                Todo List
+                What Should I do?
       </Link>
             <Nav className="mr-auto">
                 <Link className="nav-item nav-link" to="/">
@@ -14,6 +14,9 @@ export default () => (
         </Link>
                 <Link className="nav-item nav-link" to="/about">
                     About
+        </Link>
+                <Link className="nav-item nav-link" to="/contact">
+                    Contact
         </Link>
             </Nav>
         </Container>
