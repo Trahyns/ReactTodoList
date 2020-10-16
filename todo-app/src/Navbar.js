@@ -3,12 +3,12 @@ import {
     BrowserRouter as Router,
     Switch,
     Route,
-    useParams,
 } from "react-router-dom";
 import { Navbar, Nav } from 'react-bootstrap'
 import Home from './Home';
-import ContactUs from './ContactUs';
 import MyTasks from './MyTasks';
+import ContactUs from './ContactUs';
+
 
 class BootstrapNavbar extends React.Component {
 

@@ -13,7 +13,7 @@ render(
   <StoreProvider
     reducer={todoApp}
     initialState={{
-      FilterStore,
+      FilterStore
     }}
   >
     <App />

@@ -7,7 +7,7 @@ const App = () => {
 
       <div>
         <BootstrapNavbar />
-        
+      
       </div>
 
 );
