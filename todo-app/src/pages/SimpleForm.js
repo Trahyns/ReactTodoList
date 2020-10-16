@@ -1,105 +1,128 @@
-import React from 'react'
-import { Field, reduxForm } from 'redux-form'
+import React from "react";
+import { reduxForm } from 'redux-form';
+import { MDBRow, MDBCol, MDBBtn, MDBInput, MDBIcon } from "mdbreact";
+import { Container } from "react-bootstrap";
 
-const SimpleForm = props => {
-    const { handleSubmit, pristine, reset, submitting } = props
-    return (
-        <div class="container h-100">
-            <div class="row h-100 justify-content-center align-items-center">
-                <div class="col-10 col-md-8 col-lg-6">
-                    <form onSubmit={handleSubmit}>
+class SimpleForm extends React.Component {
+    state = {
+        fname: "",
+        lname: "",
+        email: "",
+        city: "",
+        state: "",
+        zip: ""
+    };
+
+    submitHandler = event => {
+        event.preventDefault();
+        event.target.className += " was-validated";
+    };
+
+    changeHandler = event => {
+        this.setState({ [event.target.name]: event.target.value });
+    };
+
+    render() {
+        return (
+          <Container>
+            <div>
+                <form
+                    className="needs-validation"
+                    onSubmit={this.submitHandler}
+                    noValidate
+                >
+                    <MDBRow>
+                        <MDBCol md="4" className="mb-3">
+                            <label
+                                htmlFor="defaultFormRegisterNameEx"
+                                className="grey-text"
+                            >
+                                First Name
+              </label>
+                            <input
+                                value={this.state.fname}
+                                name="fname"
+                                onChange={this.changeHandler}
+                                type="text"
+                                id="defaultFormRegisterNameEx"
+                                className="form-control"
+                                placeholder="First name"
+                                required
+                            />
+                            <div className="valid-feedback">Looks good!</div>
+                        </MDBCol>
+                        <MDBCol md="4" className="mb-3">
+                            <label
+                                htmlFor="defaultFormRegisterEmailEx2"
+                                className="grey-text"
+                            >
+                                Last Name
+              </label>
+                            <input
+                                value={this.state.lname}
+                                name="lname"
+                                onChange={this.changeHandler}
+                                type="text"
+                                id="defaultFormRegisterEmailEx2"
+                                className="form-control"
+                                placeholder="Last name"
+                                required
+                            />
+                            <div className="valid-feedback">Looks good!</div>
+                        </MDBCol>
+                        <MDBCol md="4" className="mb-3">
+                            <label
+                                htmlFor="defaultFormRegisterConfirmEx3"
+                                className="grey-text"
+                            >
+                                Email
+              </label>
+                            <input
+                                value={this.state.email}
+                                onChange={this.changeHandler}
+                                type="email"
+                                id="defaultFormRegisterConfirmEx3"
+                                className="form-control"
+                                name="email"
+                                placeholder="Your Email address"
+                            />
+                            <small id="emailHelp" className="form-text text-muted">
+                                We'll never share your email with anyone else.
+              </small>
+                        </MDBCol>
+                    </MDBRow>
+                    <MDBCol>
                         <div>
-                            <label>First Name</label>
-                            <div>
-                                <Field
-                                    name="firstName"
-                                    component="input"
-                                    type="text"
-                                    placeholder="First Name"
-                                />
-                            </div>
+                            <MDBInput type="textarea" rows="2" placeHolder="Your message" icon="pencil-alt"></MDBInput>
                         </div>
-                        <div>
-                            <label>Last Name</label>
-                            <div>
-                                <Field
-                                    name="lastName"
-                                    component="input"
-                                    type="text"
-                                    placeholder="Last Name"
-                                />
-                            </div>
+                    </MDBCol>
+                    <MDBCol md="4" className="mb-3">
+                        <div className="custom-control custom-checkbox pl-3">
+                            <input
+                                className="custom-control-input"
+                                type="checkbox"
+                                value=""
+                                id="invalidCheck"
+                                required
+                            />
+                            <label className="custom-control-label" htmlFor="invalidCheck">
+                                Agree to terms and conditions
+              </label>
+                            <div className="invalid-feedback">
+                                You must agree before submitting.
+              </div>
                         </div>
-                        <div>
-                            <label>Email</label>
-                            <div>
-                                <Field
-                                    name="email"
-                                    component="input"
-                                    type="email"
-                                    placeholder="Email"
-                                />
-                            </div>
-                        </div>
-                        <div>
-                            <label>Sex</label>
-                            <div>
-                                <label>
-                                    <Field name="sex" component="input" type="radio" value="male" />{' '}
-                                    Male
-                                </label>
-                                <label>
-                                    <Field name="sex" component="input" type="radio" value="female" />{' '}
-                                    Female
-                                </label>
-                                <label>
-                                    <Field name="sex" component="input" type="radio" value="other" />{' '}
-                                    Other
-                                </label>
-                            </div>
-                        </div>
-                        <div>
-                            <label>Favorite Color</label>
-                            <div>
-                                <Field name="favoriteColor" component="select">
-                                    <option />
-                                    <option value="ff0000">Red</option>
-                                    <option value="00ff00">Green</option>
-                                    <option value="0000ff">Blue</option>
-                                </Field>
-                            </div>
-                        </div>
-                        <div>
-                            <label htmlFor="employed">Employed</label>
-                            <div>
-                                <Field
-                                    name="employed"
-                                    id="employed"
-                                    component="input"
-                                    type="checkbox"
-                                />
-                            </div>
-                        </div>
-                        <div>
-                            <label>Notes</label>
-                            <div>
-                                <Field name="notes" component="textarea" />
-                            </div>
-                        </div>
-                        <div>
-                            <button type="submit" disabled={pristine || submitting}>
-                                Submit
-                    </button>
-                            <button type="button" disabled={pristine || submitting} onClick={reset}>
-                                Clear Values
-                    </button>
-                        </div>
-                    </form>
-                </div>
+                    </MDBCol>
+                    <MDBBtn color="primary" type="submit">
+                        Submit Form
+          </MDBBtn>
+                </form>
             </div>
-        </div>
-    )
+            </Container>  
+        );
+    }
 }
+
 
 export default reduxForm({
     form: 'simple' // a unique identifier for this form
