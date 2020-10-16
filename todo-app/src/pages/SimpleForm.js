@@ -2,13 +2,18 @@ import React from 'react';
 import { Container } from "react-bootstrap";
 import { Field, reduxForm } from 'redux-form'
 
+const submit = (values) => {
+    console.log('submit inside form');
+    console.log(values);
+}
+
 const SimpleForm = props => {
     const { handleSubmit, pristine, reset, submitting } = props
 
     return (
         <React.Fragment>  
             <Container className="center">
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit(submit)}>
                     <div>
                         <label>First Name</label>
                         <div>
