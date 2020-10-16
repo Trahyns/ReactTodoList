@@ -3,7 +3,6 @@ import { Container, Row, Col, Table, Form, Button } from "react-bootstrap";
 import AddTodo from "../components/AddTodo";
 import Modal from "../components/Modal";
 import axios from "axios";
-import SimpleForm from "./SimpleForm";
 
 export default class Main extends React.Component {
     state = {
@@ -15,7 +14,7 @@ export default class Main extends React.Component {
 
     componentDidMount() {
         axios
-            .get("https://jsonplaceholder.typicode.com/todos?_limit=10")
+            .get("https://jsonplaceholder.typicode.com/todos?_limit=0")
             .then(res => this.setState({ todos: res.data }));
     }
 
