@@ -1,6 +1,6 @@
 import React from "react";
 import { reduxForm } from 'redux-form';
-import { MDBRow, MDBCol, MDBBtn, MDBInput, MDBIcon } from "mdbreact";
+import { MDBRow, MDBCol, MDBBtn, MDBInput } from "mdbreact";
 import { Container } from "react-bootstrap";
 
 class SimpleForm extends React.Component {
